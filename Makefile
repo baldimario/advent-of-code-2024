@@ -18,7 +18,7 @@ build: ## Build docker containers
 	${DC} build
 
 up: ## Start docker containers
-	${DC} up -d
+	${DC} up -d --remove-orphans
 
 run: ## Start docker containers attached
 	${DC} run ${SERVICE} poetry run python -m advent_of_code_2024.main
@@ -52,7 +52,7 @@ repl: build run ## Start a read-eval-print-loop
 test: ## Run tests
 
 cs: ## Run code style checks
-	${DC} run --rm ${SERVICE} poetry run black --check .
+	${DC} run  --rm ${SERVICE} poetry run black --check .
 
 format: ## Format code
 	${DC} run --rm ${SERVICE} poetry run black .
