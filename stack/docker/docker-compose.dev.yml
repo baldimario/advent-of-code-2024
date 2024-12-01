@@ -1,0 +1,13 @@
+services:
+  app:
+    extends:
+      file: docker-compose.yml
+      service: app
+    command: poetry run python -m advent_of_code_2024.main
+    build:
+      context: ../../
+      dockerfile: stack/docker/python/Dockerfile
+      target: dev
+    volumes:
+      - ../../:/app
+
