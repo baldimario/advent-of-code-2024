@@ -6,59 +6,47 @@ https://adventofcode.com/2024/day/1
 
 import os
 import logging
+from advent_of_code_2024.day_02.main_01 import is_safe
 
 logging.basicConfig(level=logging.DEBUG)
 
-
-def get_counting_map(list1, list2):
+def is_safe_with_tolerance(signal):
     """
-    Get a map where for each element in list1
-    counts how many times it appears in list2
+    Check if the signal is safe
     """
-    return [{i: list2.count(i)} for i in list1]
+    if is_safe(signal):
+        return True
 
+    for i in range(len(signal)):
+        if is_safe(signal[:i] + signal[i + 1:]):
+            return True
 
-def get_similarity_score(counting_map):
-    """
-    Get the similarity score from a counting map
-    multiplying the element by the number of times it appears
-    """
-    return sum(k * v for i in counting_map for (k, v) in i.items())
+    return False
 
-
-def main(data):
+def main(levels):
     """
     Main function
     """
-    list1 = data["list1"]
-    list2 = data["list2"]
 
-    logging.info("Getting counting map...")
+    result = 0
+    for signal in levels:
+        if is_safe_with_tolerance(signal):
+            result += 1
 
-    counting_map = get_counting_map(list1, list2)
+    logging.info("The result is %s", result)
 
-    logging.info("Getting similarity score...")
-
-    result = get_similarity_score(counting_map)
-
-    print(f"The result is: {result}")
-
-    print("Done.")
+    logging.info("Done.")
     return result
 
 
 if __name__ == "__main__":
-    inputs = {
-        "list1": [],
-        "list2": [],
-    }
+    inputs = []
 
     input_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input.txt")
 
     with open(input_file, encoding="utf-8") as file:
         for line in file:
-            value1, value2 = line.split()
-            inputs["list1"].append(int(value1))
-            inputs["list2"].append(int(value2))
+            values = [int(value) for value in line.split()]
+            inputs.append(values)
 
     main(inputs)

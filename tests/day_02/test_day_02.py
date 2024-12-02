@@ -9,7 +9,7 @@ from advent_of_code_2024.day_02.main_01 import (
     is_safe,
     is_monotonic,
 )
-
+from advent_of_code_2024.day_02.main_02 import is_safe_with_tolerance
 
 class TestDay02:  # pylint: disable=too-few-public-methods
     """
@@ -58,3 +58,13 @@ class TestDay02:  # pylint: disable=too-few-public-methods
         assert is_monotonic([3, 5, 7])
         assert is_monotonic([7, 5, 3])
         assert not is_monotonic([3, 5, -7])
+
+    def test_is_safe_with_tolerance(self):
+        """
+        Test the is_safe_with_tolerance function
+        """
+        assert not is_safe_with_tolerance([1, 1, 1])
+        assert is_safe_with_tolerance([2, 3, 10])
+        assert is_safe_with_tolerance([3, 5, 7])
+        assert is_safe_with_tolerance([3, 5, -7, 6])
+        assert not is_safe_with_tolerance([3, 5, -7, 10, 4, 12])

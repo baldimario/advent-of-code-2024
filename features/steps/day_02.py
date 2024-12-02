@@ -5,6 +5,7 @@ from behave import (  # pylint: disable=no-name-in-module
     then,  # pyright: ignore
 )
 from advent_of_code_2024.day_02.main_01 import is_safe
+from advent_of_code_2024.day_02.main_02 import is_safe_with_tolerance
 
 
 @given('the signal "{list_name}"')
@@ -64,3 +65,19 @@ def then_number_of_safe_signals_should_be(context, count):
     Asserts the number of safe signals.
     """
     assert sum(1 if is_safe(signal) else 0 for signal in context.lists) == count
+
+@then("the signals safety with tolerance should be")
+def then_signals_safety_with_tolerance_should_be(context):
+    """
+    Asserts the safety of the signals with tolerance.
+    """
+    for index, row in enumerate(context.table.rows):
+        assert is_safe_with_tolerance(context.lists[index]) == (row["safe"] == "yes")
+
+@then("the number of safe signals with tolerance should be {count:d}")
+def then_number_of_safe_signals_with_tolerance_should_be(context, count):
+    """
+    Asserts the number of safe signals with tolerance.
+    """
+    assert sum(1 if is_safe_with_tolerance(signal) else 0 for signal in context.lists) == count
+
