@@ -7,6 +7,8 @@ https://adventofcode.com/2024/day/1
 import os
 import logging
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 def get_counting_map(list1, list2):
     """
@@ -39,9 +41,9 @@ def main(data):
 
     result = get_similarity_score(counting_map)
 
-    print(f"The result is: {result}")
+    logging.info("The result is %s", result)
 
-    print("Done.")
+    logging.info("Done.")
     return result
 
 

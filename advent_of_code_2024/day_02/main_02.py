@@ -10,27 +10,20 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 
-def compare_lists(list1, list2):
+def get_counting_map(list1, list2):
     """
-    Compare two lists element by element
-    returning a new list with elements
-    of list A subtracted by elements of list B
+    Get a map where for each element in list1
+    counts how many times it appears in list2
     """
-    return [abs(int(i) - int(j)) for i, j in zip(list1, list2)]
+    return [{i: list2.count(i)} for i in list1]
 
 
-def sort_list(list1):
+def get_similarity_score(counting_map):
     """
-    Sort a list from smallest to largest
+    Get the similarity score from a counting map
+    multiplying the element by the number of times it appears
     """
-    return sorted(list1)
-
-
-def sum_list(list1):
-    """
-    Sum a list
-    """
-    return sum(list1)
+    return sum(k * v for i in counting_map for (k, v) in i.items())
 
 
 def main(data):
@@ -40,22 +33,17 @@ def main(data):
     list1 = data["list1"]
     list2 = data["list2"]
 
-    logging.info("Sorting lists...")
+    logging.info("Getting counting map...")
 
-    list1 = sort_list(list1)
-    list2 = sort_list(list2)
+    counting_map = get_counting_map(list1, list2)
 
-    logging.info("Comparing lists...")
+    logging.info("Getting similarity score...")
 
-    result = compare_lists(list1, list2)
+    result = get_similarity_score(counting_map)
 
-    logging.info("Summing list...")
+    print(f"The result is: {result}")
 
-    result = sum_list(result)
-
-    logging.info("The result is %s", result)
-
-    logging.info("Done.")
+    print("Done.")
     return result
 
 

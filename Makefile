@@ -24,7 +24,7 @@ run: ## Start docker containers attached
 	${DC} run ${SERVICE} poetry run python -m advent_of_code_2024.main
 
 down: ## Shutdown docker containers
-	${DC} down
+	${DC} down --remove-orphans
 
 ps: ## List docker containers
 	${DC} ps
@@ -52,7 +52,7 @@ repl: build run ## Start a read-eval-print-loop
 test: ## Run tests
 
 cs: ## Run code style checks
-	${DC} run  --rm ${SERVICE} poetry run black --check .
+	${DC} run --rm ${SERVICE} poetry run black --check .
 
 format: ## Format code
 	${DC} run --rm ${SERVICE} poetry run black .
@@ -75,7 +75,7 @@ coverage: ## Run code coverage
 coverage-html: ## Run code coverage
 	${DC} run --rm ${SERVICE} poetry run coverage html
 
-check: cs lint type-check unit functional coverage ## Run all checks
+check: down cs lint type-check unit functional coverage ## Run all checks
 
 cicd: ## Run cicd pipeline
 	${DC} run --rm ${SERVICE} poetry run invoke cicd
