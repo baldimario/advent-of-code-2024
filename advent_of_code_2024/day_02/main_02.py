@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-2024-12-01
-https://adventofcode.com/2024/day/1
+2024-12-02
+https://adventofcode.com/2024/day/2
 """
 
 import os
@@ -9,6 +9,7 @@ import logging
 from advent_of_code_2024.day_02.main_01 import is_safe
 
 logging.basicConfig(level=logging.DEBUG)
+
 
 def is_safe_with_tolerance(signal):
     """
@@ -18,10 +19,11 @@ def is_safe_with_tolerance(signal):
         return True
 
     for i in range(len(signal)):
-        if is_safe(signal[:i] + signal[i + 1:]):
+        if is_safe(signal[:i] + signal[i + 1 :]):
             return True
 
     return False
+
 
 def main(levels):
     """

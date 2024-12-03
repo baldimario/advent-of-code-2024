@@ -11,6 +11,7 @@ from advent_of_code_2024.day_02.main_01 import (
 )
 from advent_of_code_2024.day_02.main_02 import is_safe_with_tolerance
 
+
 class TestDay02:  # pylint: disable=too-few-public-methods
     """
     Test class for the day_02 module

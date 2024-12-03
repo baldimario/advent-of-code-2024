@@ -1,4 +1,4 @@
-"""Dependency Injection module."""
+"""Steps for the third day of Advent of Code 2024."""
 
 from behave import (  # pylint: disable=no-name-in-module
     given,  # pyright: ignore
