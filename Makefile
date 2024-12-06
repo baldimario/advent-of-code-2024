@@ -21,7 +21,7 @@ up: ## Start docker containers
 	${DC} up -d --remove-orphans
 
 run: ## Start docker containers attached
-	${DC} run ${SERVICE} poetry run python -m advent_of_code_2024.main
+	${DC} run --remove-orphans ${SERVICE} poetry run python -m advent_of_code_2024.main
 
 down: ## Shutdown docker containers
 	${DC} down --remove-orphans
