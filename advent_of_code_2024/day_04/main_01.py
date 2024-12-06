@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-2024-12-03
-https://adventofcode.com/2024/day/3
+2024-12-04
+https://adventofcode.com/2024/day/4
 """
 
 import os

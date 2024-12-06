@@ -9,6 +9,7 @@ from advent_of_code_2024.day_04.main_01 import (
     count_word,
     word_search,
 )
+from advent_of_code_2024.day_04.main_02 import convolve, transpose, word_search_x
 
 data = [
     ["M", "M", "M", "S", "X", "X", "M", "A", "S", "M"],
@@ -54,3 +55,19 @@ class TestDay04:  # pylint: disable=too-few-public-methods
     def test_word_search(self):
         """Test word search"""
         assert word_search(data, "XMAS") == 18
+
+    def test_convolve(self):
+        """Test convolve"""
+        myfilter = [["M", None, "S"], [None, "A", None], ["M", None, "S"]]
+        assert convolve(data, myfilter) == 2
+
+    def test_transpose(self):
+        """Test transpose"""
+        matrix = [["M", "S", "A"], ["A", "M", "X"], ["M", "S", "M"]]
+        expected = [["M", "A", "M"], ["S", "M", "S"], ["M", "X", "A"]]
+        assert transpose(matrix) == expected
+
+    def test_word_search_x(self):
+        """Test word search x"""
+        myfilter = [["M", None, "S"], [None, "A", None], ["M", None, "S"]]
+        assert word_search_x(data, myfilter) == 9
