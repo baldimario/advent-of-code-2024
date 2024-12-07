@@ -32,5 +32,6 @@ Feature: Day 05
         | 75 97 47 61 53 |
         | 61 13 29 |
         | 97 13 75 29 47 |
-    Then the middle pages sum is "143"
+    Then the middle good pages sum is "143"
+    Then the middle bad pages sum is "123"
 

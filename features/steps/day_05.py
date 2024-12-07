@@ -9,6 +9,10 @@ from advent_of_code_2024.day_05.main_01 import (
     get_good_updates,
     get_middle_sum,
 )
+from advent_of_code_2024.day_05.main_02 import (
+    get_bad_updates,
+    fix_bad_updates,
+)
 
 
 @given("the rules")
@@ -33,12 +37,24 @@ def given_updates(context):
     context.updates = data
 
 
-@then('the middle pages sum is "{amount}"')
-def then_sum_is(context, amount):
+@then('the middle good pages sum is "{amount}"')
+def then_good_sum_is(context, amount):
     """
     Result
     """
     pairs = get_pairs(context.updates)
     good_updates = get_good_updates(pairs, context.rules, context.updates)
     result = get_middle_sum(good_updates)
+    assert result == int(amount)
+
+
+@then('the middle bad pages sum is "{amount}"')
+def then_bad_sum_is(context, amount):
+    """
+    Result
+    """
+    pairs = get_pairs(context.updates)
+    bad_updates = get_bad_updates(pairs, context.rules, context.updates)
+    fixed_updates = fix_bad_updates(bad_updates, context.rules)
+    result = get_middle_sum(fixed_updates)
     assert result == int(amount)

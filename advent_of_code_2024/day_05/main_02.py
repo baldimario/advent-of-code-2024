@@ -1,71 +1,54 @@
 #!/usr/bin/env python3
 """
-2024-12-04
-https://adventofcode.com/2024/day/4
+2024-12-05
+https://adventofcode.com/2024/day/5
 """
 
 import os
 import logging
+from advent_of_code_2024.day_05.main_01 import get_pairs, get_middle_sum
 
 logging.basicConfig(level=logging.DEBUG)
 
 
-def convolve(data, myfilter):
-    """
-    Convolve filter over data
-    filter is 2d matirx
-    data is 2d matrix
-    filter can have null value
-    all valuies are chars
-    rules:
-        char * char = 1 if same else 0
-        char * null = 0
-    """
-    result = 0
-    filter_height = len(myfilter)
-    filter_width = len(myfilter[0])
-    data_height = len(data)
-    data_width = len(data[0])
-    non_null_values_in_filter = sum(
-        1 for row in myfilter for value in row if value is not None
-    )
-
-    for i in range(data_height - filter_height + 1):
-        for j in range(data_width - filter_width + 1):
-            convolution_sum = 0
-            for k in range(filter_height):
-                for z in range(filter_width):
-                    if myfilter[k][z] is not None:
-                        convolution_sum += (
-                            1 if data[i + k][j + z] == myfilter[k][z] else 0
-                        )
-            result += 1 if convolution_sum == non_null_values_in_filter else 0
-    return result
+def get_bad_updates(pairs, rules, updates):
+    """Get good updates"""
+    bad_updates = []
+    for j, pair_list in enumerate(pairs):
+        is_valid = True
+        for pair in pair_list:
+            if pair not in rules:
+                is_valid = False
+        if not is_valid:
+            bad_updates.append(updates[j])
+    return bad_updates
 
 
-def transpose(matrix):
-    """rotate matrix"""
-    return [list(reversed(i)) for i in zip(*matrix)]
+def fix_bad_updates(bad_updates, rules):
+    """fix bad updates"""
+    not_fixed = True
+
+    while not_fixed:
+        not_fixed = False
+        for update in bad_updates:
+            for j in range(len(update) - 1):
+                pair = [update[j], update[j + 1]]
+                if pair not in rules:
+                    update[j], update[j + 1] = update[j + 1], update[j]
+                    not_fixed = True
+
+    return bad_updates
 
 
-def word_search_x(data, myfilter):
-    """Word search X"""
-    result = 0
-    for _ in range(4):
-        myfilter = transpose(myfilter)
-
-        result += convolve(data, myfilter)
-
-    return result
-
-
-def main(data):
+def main(rules, updates):
     """
     Main function
     """
-    myfilter = [["M", None, "S"], [None, "A", None], ["M", None, "S"]]
 
-    result = word_search_x(data, myfilter)
+    pairs = get_pairs(updates)
+    bad_updates = get_bad_updates(pairs, rules, updates)
+    fixed_updates = fix_bad_updates(bad_updates, rules)
+    result = get_middle_sum(fixed_updates)
 
     logging.info("The result is: %s", result)
 
@@ -74,12 +57,21 @@ def main(data):
 
 
 if __name__ == "__main__":
-    inputs = []
+    input_rules = []
+    input_updates = []
 
     input_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input.txt")
 
+    empty_line_found = False  # pylint: disable=invalid-name
     with open(input_file, encoding="utf-8") as file:
-        for line in file:
-            inputs.append(list(line.rstrip()))
+        for i, line in enumerate(file):
+            if not line.rstrip():
+                empty_line_found = True  # pylint: disable=invalid-name
+                continue
 
-    main(inputs)
+            if not empty_line_found:
+                input_rules.append([int(c) for c in line.rstrip().split("|")])
+            else:
+                input_updates.append([int(c) for c in line.rstrip().split(",")])
+
+    main(input_rules, input_updates)
