@@ -1,6 +1,6 @@
-Feature: Day 05
+Feature: Day 06
 
-  Scenario: Guard algo
+  Scenario: Guard algo loops
     Given the map
         | value |
         | ....#..... |

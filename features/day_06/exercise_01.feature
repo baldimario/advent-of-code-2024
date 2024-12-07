@@ -1,4 +1,4 @@
-Feature: Day 05
+Feature: Day 06
 
   Scenario: Guard algo
     Given the map
