@@ -8,6 +8,8 @@ from advent_of_code_2024.day_06.main_01 import (
     count_positions,
 )
 
+from advent_of_code_2024.day_06.main_02 import get_loops
+
 
 class TestDay06:  # pylint: disable=too-few-public-methods
     """
@@ -43,3 +45,18 @@ class TestDay06:  # pylint: disable=too-few-public-methods
         expected_count = 2
         count = count_positions(numeric_map)
         assert count == expected_count
+
+    def test_get_loops(self):
+        """Test get_loops"""
+        numeric_map = [
+            [0, -1, 0, 0],
+            [0, 0, 0, 0],
+            [-1, 0, 0, 0],
+            [0, 0, -1, 0],
+        ]
+        player_position = [1, 1]
+        directions = [[-1, 0], [0, 1], [1, 0], [0, -1]]  # y, x
+        player_turns = 0
+        expected_loops = 1
+        loops = get_loops(numeric_map, player_position, directions, player_turns)
+        assert loops == expected_loops

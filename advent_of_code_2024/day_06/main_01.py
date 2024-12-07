@@ -10,14 +10,6 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 
-def printm(matrix):
-    """Prints the input matrix."""
-    for row in matrix:
-        for element in row:
-            print(element, end=" ")
-        print("")
-
-
 def get_numeric_map_and_player_position(data, symbol_map, player_symbol):
     """Get numeric map and player position"""
     player_position = None
@@ -32,7 +24,9 @@ def get_numeric_map_and_player_position(data, symbol_map, player_symbol):
     return numeric_map, player_position
 
 
-def evolve(numeric_map, directions, player_position, player_turns):
+def evolve(
+    numeric_map, directions, player_position, player_turns, max_loop_detect=None
+):
     """Evolve the algo"""
     map_height = len(numeric_map)
     map_width = len(numeric_map[0])
@@ -57,6 +51,9 @@ def evolve(numeric_map, directions, player_position, player_turns):
             continue
 
         next_cell = numeric_map[new_position[0]][new_position[1]]
+
+        if max_loop_detect and next_cell + 1 > max_loop_detect:
+            raise StopIteration("Loop detected")
 
         if next_cell >= 0:
             numeric_map[player_position[0]][player_position[1]] += 1
