@@ -17,6 +17,7 @@ def get_permutations(items):
     """Get operations permutations"""
     return list(itertools.product(items, repeat=2))
 
+
 def printm(matrix):
     """Prints the input matrix."""
     for row in matrix:
@@ -24,12 +25,13 @@ def printm(matrix):
             print(element, end="")
         print("")
 
+
 def get_antennas(data):
-    """ Get antennas types """
+    """Get antennas types"""
     antennas = {}
     for j, row in enumerate(data):
         for i, element in enumerate(row):
-            if element == '.':
+            if element == ".":
                 continue
 
             if element not in antennas:
@@ -38,19 +40,22 @@ def get_antennas(data):
             antennas[element].append([j, i])
     return antennas
 
+
 def get_mutual_positions(positions):
-    """ Get pairs of mutual positions """
+    """Get pairs of mutual positions"""
     pairs_ids = get_permutations(tuple(range(len(positions))))
     pairs = [[positions[pair_id[0]], positions[pair_id[1]]] for pair_id in pairs_ids]
     return pairs
 
+
 def get_antinode(a, b):
-    """ get position of antinode c from a and b """
-    delta = [b[0]-a[0], b[1]-a[1]]
-    return [b[0]+delta[0], b[1]+delta[1]]
+    """get position of antinode c from a and b"""
+    delta = [b[0] - a[0], b[1] - a[1]]
+    return [b[0] + delta[0], b[1] + delta[1]]
+
 
 def compute_antinodes(data):
-    """ Update map setting antinodes """
+    """Update map setting antinodes"""
     height = len(data)
     width = len(data[0])
     for _, positions in get_antennas(data).items():
@@ -65,17 +70,19 @@ def compute_antinodes(data):
             if c[0] < 0 or c[0] >= height or c[1] < 0 or c[1] >= width:
                 continue
 
-            data[c[0]][c[1]] = '#'
+            data[c[0]][c[1]] = "#"
     return data
 
+
 def count_antinodes(data):
-    """ count antinodes in map """
+    """count antinodes in map"""
     result = 0
     for row in data:
         for element in row:
-            if element == '#':
+            if element == "#":
                 result += 1
     return result
+
 
 def main(data):
     """
