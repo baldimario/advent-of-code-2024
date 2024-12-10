@@ -1,4 +1,4 @@
-"""Steps for the 4th day of Advent of Code 2024."""
+"""Steps for the 6th day of Advent of Code 2024."""
 
 from behave import (  # pylint: disable=no-name-in-module
     given,  # pyright: ignore
